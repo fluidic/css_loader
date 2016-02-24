@@ -1,11 +1,30 @@
 // Copyright (c) 2016, <your name>. All rights reserved. Use of this source code
 // is governed by a BSD-style license that can be found in the LICENSE file.
 
-// TODO: Put public facing types in this file.
-
 library css_loader.base;
 
-/// Checks if you are awesome. Spoiler: you are.
-class Awesome {
-  bool get isAwesome => true;
+import 'dart:html';
+
+bool isCssImported(String id) {
+  final sheets = document.getElementsByTagName('style');
+  return sheets.firstWhere((StyleElement e) => e.id == id,
+      orElse: () => null) != null;
+}
+
+void importCssString(String cssText, [String id]) {
+  if (cssText == null) throw new ArgumentError.notNull('cssText');
+  if (id != null && isCssImported(id)) return;
+
+  final style = new StyleElement()..appendText(cssText);
+  if (id != null) style.id = id;
+
+  document.head.append(style);
+}
+
+void importCssStyleSheet(Uri uri) {
+  final link = new LinkElement()
+    ..rel = 'stylesheet'
+    ..href = uri.toString();
+
+  document.head.append(link);
 }

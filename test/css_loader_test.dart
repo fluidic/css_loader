@@ -3,19 +3,39 @@
 
 library css_loader.test;
 
+import 'dart:html';
+
+@TestOn("browser")
 import 'package:css_loader/css_loader.dart';
 import 'package:test/test.dart';
 
-void main() {
-  group('A group of tests', () {
-    Awesome awesome;
+main() {
+  group('CSS tests', () {
+    test('importCssString', () {
+      final p = document.createElement('p');
+      document.body.append(p);
+      importCssString('p {color:green}');
 
-    setUp(() {
-      awesome = new Awesome();
+      expect(p.getComputedStyle().color, equals('rgb(0, 128, 0)'));
     });
 
-    test('First Test', () {
-      expect(awesome.isAwesome, isTrue);
+    test('isCssImported keeps track of the list of imported CSS by id', () {
+      final p = document.createElement('p');
+      document.body.append(p);
+
+      expect(isCssImported('myid'), isFalse);
+
+      importCssString('p {color:green}', 'myid');
+
+      expect(isCssImported('myid'), isTrue);
+    });
+
+    test('importCssStylesheet', () {
+      final p = document.createElement('p');
+      document.body.append(p);
+      importCssStyleSheet(new Uri(path: './test.css'));
+
+      expect(p.getComputedStyle().color, equals('rgb(0, 128, 0)'));
     });
   });
 }
