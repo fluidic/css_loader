@@ -1,7 +1,7 @@
 name: css_loader
 description: A set of utility functions to load CSS dynamically.
 version: 0.1.0
-#author: Your Name <email@example.com>
+author: Fluidic Team <dev@fluidic.io>
 homepage: https://github.com/fluidic/css_loader
 
 environment:
