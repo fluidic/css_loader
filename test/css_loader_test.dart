@@ -1,5 +1,3 @@
-library css_loader.test;
-
 import 'dart:html';
 
 @TestOn("browser")
